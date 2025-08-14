@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class User {
 	
 	BusDetails busdetails = new BusDetails();
+
 	Map< String , String > userDetails = new HashMap<>();
 	
 	Scanner scan = new Scanner (System.in);
@@ -19,28 +20,37 @@ public class User {
 		System.out.print("Enter the User Name : ");
 		String userName = scan.next();
 		
-		System.out.print("Enter the Password : ");
-		String userPassword = scan.next();
-		
 		if(userDetails.containsKey(userName)) {
+			System.out.print("Enter the Password : ");
+			String userPassword = scan.next();
 			if(userDetails.get(userName).equals(userPassword)) {
+				
+				
 				System.out.println("Login success");
 				homepage();
 			}
+			else {
+				System.out.println("Entered Password is wrong. Enter the correct password");
+				userSignin();
 		}
+		
+		}
+		else {
+			System.out.println("User name not found");
+			userSignin();
+			
+		}
+		
 	}
-				
-				
-		public void homepage() {
-				
-				System.out.println();
-				System.out.println("=========== Home page ===========");
-				System.out.println();
-				System.out.println("1.Bus Booking");
-				System.out.println("2.Cancel Ticket");
-				System.out.println("3.Booking History");
-				System.out.println("4.Exit");
-				System.out.print("Select the option : ");
+	public void homepage() {
+		System.out.println();
+		System.out.println("=========== Home page ===========");
+		System.out.println();
+		System.out.println("1.Bus Booking");
+		System.out.println("2.Cancel Ticket");
+		System.out.println("3.Booking History");
+		System.out.println("4.Exit");
+		System.out.print("Select the option : ");
 				
 				int option=0;
 				try {
@@ -58,7 +68,7 @@ public class User {
 				case 1:
 					busdetails.loadBus();
 					busdetails.displayBus();
-					
+					break;
 				case 2:
 					System.out.println("Cancel");
 					break;
@@ -95,6 +105,13 @@ public class User {
 		System.out.print("Enter the Password : ");
 		String correctUserPassword = scan.next();
 		
+		if((correctUserName.equals(correctUserPassword))){
+			System.out.println();
+			System.out.println("Please enter a different password. Password shouldn't same as User name. ");
+			userRegister();
+		
+		}
+		else {
 		System.out.print("Confirm your Password :");
 		String confirmPassword = scan.next();
 		
@@ -105,15 +122,10 @@ public class User {
 			userSignin();
 		}
 		else {
-			System.out.println("Password Mismatch. Enter the correct password");
+			System.out.println("Password Mismatch. Please check the details");
 			userRegister();
 		}
-		
-		
-		
-		
-		
-	
+		}
 	}
 		
 		
