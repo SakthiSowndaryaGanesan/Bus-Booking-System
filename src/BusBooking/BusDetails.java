@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class BusDetails {
 	
 	private int busId ;
-	private String busName;
+	private String busName;	
 	private String registrationNumber;
 	private String departure;
 	private String destination;
@@ -37,7 +37,6 @@ public class BusDetails {
 
 	public BusDetails() {} //Default constructor
 
-	
 	public int getId() {
 		return busId;}
 	public void setId(int id) {
@@ -93,7 +92,7 @@ public class BusDetails {
 	
 	Scanner scan = new Scanner (System.in);
 	
-	BookingProcess bookingprocess =new BookingProcess();
+	BookingProcess bookingprocess = new BookingProcess();
 	
 	public void loadBus() {
 		listbusdetails.add(new BusDetails(1,"Krishna Travels" , "TN45CH7654","Chennai","Salem",1200,30,30,LocalTime.of(22, 30),LocalTime.of(5, 30)));
