@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ViewBookingDetails{
-	
-Scanner scan = new Scanner(System.in);
-
 
 	private int busId;
 	private String busName;
@@ -20,7 +17,8 @@ Scanner scan = new Scanner(System.in);
 	private LocalTime arrivalTime;
 	private int numberoftickets;
 	private int availableSeat;
-	private User userPage;
+	
+	private User user;
 
 	
 	public ViewBookingDetails( int busId, String busName, String registrationNumber,
@@ -39,9 +37,12 @@ Scanner scan = new Scanner(System.in);
 		this.availableSeat = availableSeat;
 	}
 
-	public ViewBookingDetails() { //Default 
+	public ViewBookingDetails() { // No parameter 
 		}
 	
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getBusId() {
 		return busId;}
@@ -59,7 +60,7 @@ Scanner scan = new Scanner(System.in);
 		return departure;}
 	public void setDeparture(String departure) {
 		this.departure = departure;}
-	public String getDestination() {
+	public String getmDestination() {
 		return destination;}
     public void setDestination(String destination) {
 		this.destination = destination;	}
@@ -98,6 +99,7 @@ Scanner scan = new Scanner(System.in);
 
 	List <ViewBookingDetails> viewbooking = new ArrayList <>();
 	
+	Scanner scan = new Scanner(System.in);
 	int option = 0;
 	
 	public void bookingHistory(int busId, String busName, String registrationNumber,
@@ -110,7 +112,7 @@ Scanner scan = new Scanner(System.in);
 		
 		int index = viewbooking.size() - 1;
 		
-		System.out.println("-------- Your Booking Summary --------");
+		System.out.println("\n-------- Your Booking Summary --------");
 		
 		System.out.println("Bus Id : "+viewbooking.get(index).busId);
 		System.out.println("Bus Name : "+ viewbooking.get(index).busName);
@@ -118,32 +120,41 @@ Scanner scan = new Scanner(System.in);
 		System.out.println("Departure from " + viewbooking.get(index).departure +" is at "+ viewbooking.get(index).depatureTime +" and reachs "+ viewbooking.get(index).destination +" by " + viewbooking.get(index).arrivalTime );
 		System.out.println("Number of Tickets booked :  " + viewbooking.get(index).numberoftickets);
 		System.out.println("Total amount paid :  " + viewbooking.get(index).totalFare);
-		System.out.println("Thanks for booking");
+		System.out.println("\nBooking successful and Have a safe journey !");
 		
-		System.out.print("Press 1 to view the all bookings or Press 2 for home page : ");
-		
-		option = scan.nextInt();
-		 switch (option) {
-	        case 1 -> allBookingHistory();
-
-	        case 2 -> {
-	            System.out.println("calling home page");
-	            
-	        }
-
-	        default -> System.out.println("Invalid input");
-	    }
+		bookingException();
 		
 	}
-	
-//	public void options() {
-//	   
-//	}
+	public void bookingException() {
+		
+		System.out.print("\nPress 1 to view the all bookings or Press 2 for Exit : ");
+		
+		try {
+		option = scan.nextInt();
+		 switch (option) {
+	        case 1 -> allBookingHistory(); 
 
-	
+	        case 2 -> {System.out.println("calling home page");
+	        user.homepage();
+	        }
+
+	        default -> {
+	        	System.out.println("Invalid input");
+	        	bookingException();
+	        	
+	        }
+	    }
+		}
+		catch(Exception e) {
+			System.out.println("Enter a valid Option 1 or 2");
+			scan.next();
+			bookingException();
+		}
+	}
+
 	public void allBookingHistory() {
 		
-		System.out.println("-------- All Booking Summary --------\n");
+		System.out.println("\n-------- All Booking Summary --------\n");
 		int bookingcount = 1;
 		
 		for(ViewBookingDetails allbooking : viewbooking) {
@@ -155,13 +166,38 @@ Scanner scan = new Scanner(System.in);
 			System.out.println("Departure from " + allbooking.departure +" is at "+ allbooking.depatureTime +" and reachs "+ allbooking.destination +" by " + allbooking.arrivalTime );
 			System.out.println("Number of Tickets booked :  " + allbooking.numberoftickets);
 			System.out.println("Total amount paid :  " + allbooking.totalFare);
-			System.out.println("-------------------------");
 			bookingcount++;
+			
+			allBookingException();
+		}
+	}
+	public void allBookingException() {
+		
+		System.out.println("\nPress 1 to Continue booking or 2 to Exit");
+		
+		try {
+		int selectOption = scan.nextInt();
+		switch (selectOption) {
+        case 1 ->  allBookingHistory();
+
+        case 2 -> {
+        	System.out.println("Calling home page");
+        	user.homepage();
+        }
+
+        default -> {
+        	System.out.println("Invalid input");
+        	bookingException();
+        	}	
+        }
+	}
+		catch(Exception e) {
+			System.out.println("Enter a valid input 1 or 2");
+			scan.next();
+			allBookingException();
 			
 		}
 	}
-	
-
 }
 
 

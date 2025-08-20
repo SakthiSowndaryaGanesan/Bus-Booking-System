@@ -7,17 +7,22 @@ import java.util.Scanner;
 public class User {
 
 	BusDetails busdetails = new BusDetails();
-	ViewBookingDetails viewbookingdetails = new ViewBookingDetails();
+	ViewBookingDetails viewbookingdetails;
 	
-	BookingProcess bookingprocess = new BookingProcess();
+	BookingProcess bookingprocess;
 
+	public User() {
+		viewbookingdetails = new ViewBookingDetails();
+		viewbookingdetails.setUser(this);
+		bookingprocess = new BookingProcess(viewbookingdetails);
+	}
 	Map<String, String> userDetails = new HashMap<>();
 
 	Scanner scan = new Scanner(System.in);
 
 	public void userSignin() {
 		System.out.println();
-		System.out.println(" ============ User Login ============");
+		System.out.println("============ User Login ============");
 		System.out.println();
 
 		System.out.print("Enter the User Name : ");
@@ -28,10 +33,10 @@ public class User {
 			String userPassword = scan.next();
 			if (userDetails.get(userName).equals(userPassword)) {
 
-				System.out.println("Login success");
+				System.out.println("\nLogin success !");
 				homepage();
 			} else {
-				System.out.println("Entered Password is wrong. Enter the correct password");
+				System.out.println("User name or password is incorrect.");
 				userSignin();
 			}
 
@@ -44,21 +49,18 @@ public class User {
 	}
 
 	public void homepage() {
-		System.out.println();
-		System.out.println("=========== Home page ===========");
-		System.out.println();
+		System.out.println("\n=========== Home page ===========\n");
 		System.out.println("1.Bus Booking");
 		System.out.println("2.Cancel Ticket");
 		System.out.println("3.Booking History");
 		System.out.println("4.Exit");
-		System.out.print("Select the option : ");
+		System.out.print("\nSelect the option : ");
 
 		int option = 0;
 		try {
 			option = scan.nextInt();
 		} catch (Exception e) {
-			System.out.println("Enter a valid input not string");
-			scan.nextLine();
+			System.out.println("Enter a valid input.");
 			homepage();
 
 		}
@@ -67,7 +69,8 @@ public class User {
 			switch (option) {
 			case 1:
 				busdetails.loadBus();
-				busdetails.displayBus();
+				System.out.println("Bus loaded successfully");
+				busdetails.displayBus(bookingprocess);
 				break;
 			case 2:
 				bookingprocess.cancelBooking();
@@ -88,9 +91,7 @@ public class User {
 
 	public void userRegister() {
 
-		System.out.println();
-		System.out.println(" ============ User Register ============");
-		System.out.println();
+		System.out.println("\n============ User Register ============\n");
 
 		System.out.print("Enter the User Name : ");
 		String correctUserName = scan.next();
@@ -109,13 +110,13 @@ public class User {
 			userRegister();
 
 		} else {
-			System.out.print("Confirm your Password :");
+			System.out.print("Confirm your Password : ");
 			String confirmPassword = scan.next();
 
 			if (correctUserPassword.equals(confirmPassword)) {
 
 				userDetails.put(correctUserName, correctUserPassword);
-				System.out.println("You have registered successfully !");
+				System.out.println("\nYou have registered successfully !");
 				userSignin();
 			} else {
 				System.out.println("Password Mismatch. Please check the details");

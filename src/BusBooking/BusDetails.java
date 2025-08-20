@@ -21,7 +21,6 @@ public class BusDetails {
 	private LocalTime arrivalTime;
 	
 	
-	
 	public BusDetails(int busId, String busName, String registrationNumber, String departure, String destination, int fare, int totalSeats, int availableSeats, LocalTime depatureTime, LocalTime arrivalTime) {
 		this.busId = busId;
 		this.busName = busName;
@@ -92,7 +91,6 @@ public class BusDetails {
 	
 	Scanner scan = new Scanner (System.in);
 	
-	BookingProcess bookingprocess = new BookingProcess();
 	
 	public void loadBus() {
 		listbusdetails.add(new BusDetails(1,"Krishna Travels" , "TN45CH7654","Chennai","Salem",1200,30,30,LocalTime.of(22, 30),LocalTime.of(5, 30)));
@@ -111,7 +109,7 @@ public class BusDetails {
 				
 		}
 	
-	public void displayBus() {
+	public void displayBus(BookingProcess bookingProcess) {
 		
 		for(BusDetails busdispaly : listbusdetails) {
 				System.out.print(busdispaly.busId + ". ");
@@ -123,16 +121,57 @@ public class BusDetails {
 				System.out.println("Price : ₹"+busdispaly.fare);
 				System.out.println("Available seats : "+busdispaly.getAvailableSeats());
 				System.out.println();
+		
 			}
+		
+		System.out.println("======== Select your bus ========");
+		while(true) {
+			System.out.print("\nSelect the bus ID to book your seats : ");
 
-				System.out.print("Select the bus ID to book your seats : ");				
-				int enteredBusId = scan.nextInt();
-				System.out.println();
-				
-				bookingprocess.bookTickets(listbusdetails , enteredBusId);
-				
-				
-		}						
+			int enteredBusId = scan.nextInt();
+			
+			try {
+				 if(enteredBusId >=1 && enteredBusId <= 10) {
+						bookingProcess.bookTickets(listbusdetails , enteredBusId);
+					}
+					else {
+						System.out.println("\nPlease enter a valid input 1 to 10");
+						scan.nextLine();
+						continue;
+						
+					}
+				}
+				catch(Exception e){
+					System.out.println("\nEnter a valid input");
+				}
+		}
+	
+
+	}
+//	public void selectBus() {
+//
+//		System.out.print("\nSelect the bus ID to book your seats : ");
+//
+//				int enteredBusId = 0;
+//				
+//				try {
+//				 enteredBusId = scan.nextInt();
+//				 if(enteredBusId >=1 && enteredBusId <= 10) {
+//						bookingprocess.bookTickets(listbusdetails , enteredBusId);
+//					}
+//					else {
+//						System.out.println("\nPlease enter a valid input 1 to 10");
+//						selectBus();
+//
+//					}
+//				}
+//				catch(Exception e){
+//					System.out.println("\nEnter a valid input");
+//					scan.nextLine();
+//					selectBus();
+//				}
+//				
+//		}						
 			}
 			
 			

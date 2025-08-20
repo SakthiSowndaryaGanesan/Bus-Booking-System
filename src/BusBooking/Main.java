@@ -29,7 +29,7 @@ public class Main {
 			Main.main(args);
 		}
 		
-		switch(variable) {
+		switch(variable) { 
 		case 1:
 			user.userSignin();
 			break;
